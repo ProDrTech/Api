@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from payment.views import PaymeCallBackAPIView, ClickWebhookAPIView
+from payment.views import PaymeCallBackAPIView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("payment/update/", PaymeCallBackAPIView.as_view()),
