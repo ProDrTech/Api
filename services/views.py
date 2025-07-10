@@ -6,7 +6,9 @@ from services.serializers import PaymentSerializer
 from users.models import UserModel 
 
 from payme import Payme
+from click_up import ClickUp
 payme = Payme(payme_id=settings.PAYME_ID)
+click_up = ClickUp(service_id="76984", merchant_id="41452")
 
 class PaymentCreate(views.APIView):
     serializer_class = PaymentSerializer
@@ -38,4 +40,34 @@ class PaymentCreate(views.APIView):
         return response.Response({
             'payment': serializer.data,
             'payment_link': payment_link
+        })
+
+class ClickCreate(views.APIView):
+    serializer_class = PaymentSerializer
+
+    def post(self, request):
+        user_id = request.data.get('user_id')
+
+        try:
+            user = UserModel.objects.get(id=user_id)
+        except UserModel.DoesNotExist:
+            return response.Response({'detail': "Foydalanuvchi topilmadi"}, status=404)
+
+        session = create_payment_session(user)
+
+        if not session:
+            return response.Response({'detail': "To‘lanmagan buyurtma yo‘q"}, status=400)
+
+
+        serializer = self.serializer_class(instance=session)
+
+        paylink = click_up.initializer.generate_pay_link(
+            id=session.id, 
+            amount=int(session.total_amount),
+            return_url='https://t.me/asadmaxmud_bot'
+        )
+
+        return response.Response({
+            'payment': serializer.data,
+            'payment_link': paylink
         })

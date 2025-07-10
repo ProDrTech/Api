@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'payme',
     'cloudinary',
     'cloudinary_storage',
+    'click_up',
 
     # other apps
     'users',

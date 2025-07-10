@@ -5,7 +5,7 @@ from users.views.users import UserView
 from order.views.order import OrderView, UserOrdersView
 from basket.views.basket import GetBasketView, BasketView
 from bot.views import AboutView, AdvertisingView
-from services.views import PaymentCreate
+from services.views import PaymentCreate, ClickCreate
 from logo.views import SiteSettingsView
 from social.views import SocialMediaListAPIView
 from subscriptions.views import SubscriptionLinkListAPIView
@@ -33,6 +33,7 @@ urlpatterns = [
     path("order/", OrderView.as_view(), name='order'),
     path("order/<int:user_id>/", UserOrdersView.as_view(), name='getusers'),
     path('payment/create/', PaymentCreate.as_view(), name='payment_create'),
+    path('payment/click/create/', ClickCreate.as_view(), name='click_create'),
     path('settings/', SiteSettingsView.as_view()),
     path('social/', SocialMediaListAPIView.as_view()),
     path('subscribe/', SubscriptionLinkListAPIView.as_view())
