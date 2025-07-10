@@ -6,7 +6,7 @@ from order.views.order import OrderView, UserOrdersView
 from basket.views.basket import GetBasketView, BasketView
 from bot.views import AboutView, AdvertisingView
 from services.views import PaymentCreate, ClickCreate
-from logo.views import SiteSettingsView
+from logo.views import SiteSettingsView, FooterAPIView
 from social.views import SocialMediaListAPIView
 from subscriptions.views import SubscriptionLinkListAPIView
 router = DefaultRouter()
@@ -36,5 +36,6 @@ urlpatterns = [
     path('payment/click/create/', ClickCreate.as_view(), name='click_create'),
     path('settings/', SiteSettingsView.as_view()),
     path('social/', SocialMediaListAPIView.as_view()),
-    path('subscribe/', SubscriptionLinkListAPIView.as_view())
+    path('subscribe/', SubscriptionLinkListAPIView.as_view()),
+    path('footer/text/', FooterAPIView.as_view(), name='site-settings'),
 ]

@@ -162,6 +162,11 @@ UNFOLD = {
                         "link": reverse_lazy("admin:logo_sitesettings_changelist"),
                     },
                     {
+                        "title": _("Footer Text"),
+                        "icon": "settings",
+                        "link": reverse_lazy("admin:logo_footertext_changelist"),
+                    },
+                    {
                         "title": _("Ijtimoiy tarmoqlar"),
                         "icon": "share",
                         "link": reverse_lazy("admin:social_socialmedia_changelist"),
