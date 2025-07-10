@@ -1,8 +1,10 @@
 from payme.views import PaymeWebHookAPIView
 from payme.types import response
 from payme.models import PaymeTransactions
-from order.models.order import PaymentSession
 from utils.telegram import send_telegram_message
+from order.models.order import PaymentSession
+
+from click_up.models import ClickTransaction
 
 class PaymeCallBackAPIView(PaymeWebHookAPIView):
     def check_perform_transaction(self, params):
@@ -73,10 +75,44 @@ class ClickWebhookAPIView(ClickWebhook):
         """
         successfully payment method process you can ovveride it
         """
-        print(f"payment successful params: {params}")
+        transaction = ClickTransaction.objects.get(
+            transaction_id=params.click_trans_id
+        )
+        session = PaymentSession.objects.get(id=transaction.account_id)
+
+        for order in session.orders.all():
+            order.is_paid = True
+            order.save()
+
+            # ✅ user_id orqali Telegram xabar yuboramiz
+            if order.user.user_id:
+                send_telegram_message(
+                    int(order.user.user_id),
+                    "✅ <b>To‘lov qabul qilindi!</b>\nBuyurtmangiz tez orada yetkaziladi."
+                )
+
+        session.is_paid = True
+        session.save()
 
     def cancelled_payment(self, params):
         """
         cancelled payment method process you can ovveride it
         """
-        print(f"payment cancelled params: {params}")
+        transaction = ClickTransaction.objects.get(
+            transaction_id=params.click_trans_id
+        )
+
+        if transaction.state == ClickTransaction.CANCELED:
+            session = PaymentSession.objects.get(id=transaction.account_id)
+            session.is_paid = False
+            session.save()
+
+            for order in session.orders.all():
+                order.is_paid = False
+                order.save()
+
+                if order.user.user_id:
+                    send_telegram_message(
+                        int(order.user.user_id),
+                        "❌ <b>To‘lov bekor qilindi.</b>\nIltimos, qaytadan urinib ko‘ring."
+                    )
