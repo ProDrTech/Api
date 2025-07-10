@@ -12,6 +12,6 @@ class SiteSettingsView(APIView):
 
 class FooterAPIView(APIView):
     def get(self, request):
-        setting = FooterText.objects.first()
+        setting = FooterText.objects.last()
         serializer = SiteFooterSerializer(setting)
         return Response(serializer.data)
