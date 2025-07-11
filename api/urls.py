@@ -9,6 +9,7 @@ from services.views import PaymentCreate, ClickCreate
 from logo.views import SiteSettingsView, FooterAPIView
 from social.views import SocialMediaListAPIView
 from subscriptions.views import SubscriptionLinkListAPIView
+from adminContact.views import get_admin_contact
 router = DefaultRouter()
 
 # product urls
@@ -38,4 +39,5 @@ urlpatterns = [
     path('social/', SocialMediaListAPIView.as_view()),
     path('subscribe/', SubscriptionLinkListAPIView.as_view()),
     path('footer/text/', FooterAPIView.as_view(), name='site-settings'),
+    path('admin/link/', get_admin_contact),
 ]

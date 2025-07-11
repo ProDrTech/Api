@@ -176,6 +176,11 @@ UNFOLD = {
                         "icon": "link",
                         "link": reverse_lazy("admin:subscriptions_subscriptionlink_changelist"),
                     },
+                    {
+                        "title": _("Admin telegram"),
+                        "icon": "link",
+                        "link": reverse_lazy("admin:adminContact_admincontact_changelist"),
+                    },
                 ],
             },
             {
