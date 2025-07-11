@@ -157,7 +157,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     'default': dj_database_url.parse(
-        "postgresql://posrgres_db_xjxg_user:FJzf2cN4Y6CtN5z3vlcusjQ6faCnIvlq@dpg-d1o98pc9c44c73fad64g-a.oregon-postgres.render.com/posrgres_db_xjxg", 
+        "postgresql://posrgres_db_whxd_user:oerWrS1iMrSL261idvLE9IOwEYdfdNZI@dpg-d1ofgpgdl3ps73fdvhg0-a.oregon-postgres.render.com/posrgres_db_whxd", 
         conn_max_age=600, 
         ssl_require=True
     )
